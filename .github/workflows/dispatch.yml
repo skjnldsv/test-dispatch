@@ -30,8 +30,8 @@ jobs:
       workflow: ${{ matrix.workflows }}
 
     strategy:
+      fail-fast: false
       matrix:
-        fail-fast: false
         php-versions: ${{ fromJSON(needs.workflows.outputs.workflows) }}
 
     steps:

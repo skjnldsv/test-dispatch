@@ -51,7 +51,7 @@ jobs:
       matrix:
         repositories: ${{ fromJSON(needs.repositories.outputs.matrix) }}
         
-      steps:
-        - run: |
+    steps:
+      - run: |
           echo ${{ fromJSON(needs.repositories.outputs.workflows) }}
           echo ${{ fromJSON(needs.repositories.outputs.matrix) }}

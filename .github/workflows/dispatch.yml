@@ -27,12 +27,18 @@ jobs:
 
     outputs:
       matrix: ${{ steps.search-repos.outputs.matrix }}
-      workflow: ${{ matrix.workflows }}
+      workflow: ${{ matrix.workflows.workflow }}
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ${{ fromJSON(needs.workflows.outputs.workflows) }}
+        workflows: [
+          {"file":"stylelint.config.js","workflow":"lint-stylelint.yml"},
+          {"file":".eslintrc.js","workflow":"lint-eslint.yml"},
+          {"file":".php-cs-fixer.dist.php","workflow":"lint-php-cs.yml"},
+          {"file":".php_cs.dist","workflow":"lint-php-cs.yml"},
+          {"file":"composer.json","search":"composer run lint","workflow":"lint-php.yml"}
+        ]
 
     steps:
       - name: Search repositories using the ${{ github.event.inputs.name }} workflow

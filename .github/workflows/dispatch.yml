@@ -40,8 +40,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repository: ${{ fromJSON(needs.repositories.outputs.repositories) }}
-        workflow: ${{ needs.repositories.outputs.workflow) }}
+        repository: ${{ fromJSON(needs.repositories.outputs.repositories }}
+        workflow: ${{ needs.repositories.outputs.workflow }}
         
     steps:
       - run: echo ${{ matrix.workflow }} on ${{ matrix.repository }}

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      matrix: ${{ steps.search-repos.outputs.matrix }}
+      repositories: ${{ steps.search-repos.outputs.matrix }}
       workflow: ${{ matrix.workflows.workflow }}
 
     strategy:
@@ -40,9 +40,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repositories: ${{ fromJSON(needs.repositories.outputs.matrix) }}
+        repository: ${{ fromJSON(needs.repositories.outputs.repositories) }}
+        workflow: ${{ needs.repositories.outputs.workflow) }}
         
     steps:
-      - run: |
-          echo ${{ fromJSON(needs.repositories.outputs.workflows) }}
-          echo ${{ fromJSON(needs.repositories.outputs.matrix) }}
+      - run: echo ${{ matrix.workflow }} on ${{ matrix.repository }}

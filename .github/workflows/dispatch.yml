@@ -22,7 +22,7 @@ jobs:
           { "file":".eslintrc.js", "workflow":"lint-eslint.yml" },
           { "file":".php-cs-fixer.dist.php", "workflow":"lint-php-cs.yml" },
           { "file":".php_cs.dist", "workflow":"lint-php-cs.yml" },
-          { "file":"composer.json", "search":"composer run lint", "workflow":"lint-php.yml" }
+          { "file":"composer.json", "workflow":"lint-php.yml" }
         ]
 
     steps:

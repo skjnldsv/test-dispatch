@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repository: ${{ fromJSON(needs.repositories.outputs.repositories }}
+        repository: ${{ fromJSON(needs.repositories.outputs.repositories) }}
         workflow: ${{ needs.repositories.outputs.workflow }}
         
     steps:

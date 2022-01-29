@@ -7,23 +7,8 @@ name: Update workflow from org template
 on: workflow_dispatch
 
 jobs:
-  workflows:
-    runs-on: ubuntu-latest
-
-    outputs:
-      matrix: ${{ steps.workflows.outputs.matrix }}
-
-    steps:
-      - name: Search repositories using the ${{ github.event.inputs.name }} workflow
-        id: workflows
-        # This is a simple curl to fetch the list of repos containing a file and extracting the repo names
-        run: |
-          WORKFLOWS=$(echo '[{"file":"stylelint.config.js","workflow":"lint-stylelint.yml"},{"file":".eslintrc.js","workflow":"lint-eslint.yml"},{"file":".php-cs-fixer.dist.php","workflow":"lint-php-cs.yml"},{"file":".php_cs.dist","workflow":"lint-php-cs.yml"},{"file":"composer.json","search":"composer run lint","workflow":"lint-php.yml"}]' | jq -c)
-          echo "::set-output name=matrix::$WORKFLOWS"
-
   repositories:
     runs-on: ubuntu-latest
-    needs: workflows
 
     outputs:
       matrix: ${{ steps.search-repos.outputs.matrix }}

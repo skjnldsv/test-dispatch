@@ -12,7 +12,7 @@ jobs:
 
     outputs:
       repositories: ${{ steps.search-repos.outputs.matrix }}
-      workflow: ${{ matrix.workflows.workflow }}
+      workflow: ${{ matrix.workflows }}
 
     strategy:
       fail-fast: false

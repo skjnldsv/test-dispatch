@@ -22,7 +22,7 @@ jobs:
           { "file":".eslintrc.js", "workflow":"lint-eslint.yml" },
           { "file":".php-cs-fixer.dist.php", "workflow":"lint-php-cs.yml" },
           { "file":".php_cs.dist", "workflow":"lint-php-cs.yml" },
-          { "file":"composer.json", "workflow":"lint-php.yml" }
+          { "file":"composer.json", "search": "cs:fix php-cs-fixer fix", "workflow":"lint-php.yml" }
         ]
 
     steps:
@@ -31,12 +31,16 @@ jobs:
         # This is a simple curl to fetch the list of repos containing a file and extracting the repo names
         run: |
           REPOS=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/search/code?q=org%3Anextcloud%20${{ matrix.workflows.search }}%20path%3A%2F%20filename%3A${{ matrix.workflows.file }}&per_page=100" | jq -c '.items | map(.repository.name) | unique')
-          echo "::set-output name=matrix::$REPOS"
+          echo "::set-output name=${{ matrix.workflows.file }}::$REPOS"
 
   dispatch:
     runs-on: ubuntu-latest
     needs: repositories
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        workflows: ${{ fromJSON(needs) }}
         
     steps:
-      - run: echo "${{ needs.repositories.outputs.workflow }}"
-      - run: echo "${{ needs.repositories.outputs.repositories }}"
+      - run: echo 1

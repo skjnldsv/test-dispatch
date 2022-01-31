@@ -30,7 +30,7 @@ jobs:
         id: search-repos
         # This is a simple curl to fetch the list of repos containing a file and extracting the repo names
         run: |
-          REPOS=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/search/code?q=org%3Anextcloud%20${{ matrix.workflows.search }}%20path%3A%2F%20filename%3A${{ matrix.workflows.file }}&per_page=100" | jq -c '.items | map(.repository.name) | unique')
+          REPOS=$(curl -H "Accept: application/vnd.github.v3+json" --data-urlencode "q=org:nextcloud ${{ matrix.workflows.search }} filename:${{ matrix.workflows.file }}" "https://api.github.com/search/code?per_page=100" | jq -c '.items | map(.repository.name) | unique')
           echo "::set-output name=${{ matrix.workflows.file }}::$REPOS"
 
   dispatch:
